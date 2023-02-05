@@ -1,0 +1,42 @@
+.header.mode_light {
+    background-color: #CE3F3A;
+    color: white;
+}
+
+.header.mode_light > .nav > ul > li > button {
+    color: white;
+    border-bottom-color: white;
+}
+
+.main.mode_light {
+    background-color: rgb(241, 241, 241);
+}
+
+.pokemon_cart.mode_light {
+    border-color:black;
+    box-shadow: 1px 1px 1px black;
+}
+
+.pokemon_cart > .pokemon_name.mode_light {
+    color: white;
+    border-bottom-color: white;
+    background-color: #CE3F3A;
+}
+
+.pokemon_cart > .pokemon_types.mode_light {
+    background-color: #CE3F3A;
+    border-top-color: white;
+}
+
+.pokemon_cart > .pokemon_types.mode_light > div > img {
+    border-color: white;
+}
+
+.pokemon_cart > .pokemon_types.mode_light > div > p {
+    color: white;
+}
+
+.view.mode_light > .pokemon_button_view > button {
+    background-color: #dddddd;
+    color: rgb(0, 0, 0);
+}

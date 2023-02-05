@@ -10,6 +10,7 @@ export default class ClassRendererHtml {
 
     constructor() {
         this.ElementList.push(this.Main)
+        this.Main.classList.add('main')
         this.AddMode(this.Main)
     }
 
@@ -67,6 +68,7 @@ export default class ClassRendererHtml {
             ElementUl.appendChild(ElementLi)
         })
 
+        ElementNav.classList.add('nav')
         ElementNav.appendChild(ElementUl)
 
         return ElementNav
@@ -116,7 +118,7 @@ export default class ClassRendererHtml {
         `
             ${PokemonElementName1 === undefined?'':`<div><img src="${ElementUrl}${PokemonElementName1}.svg" alt="${PokemonElementName1}" class="bg_${PokemonElementName1}"/><p>${PokemonElementName1}</p></div>`}
         `
-        ElementDiv.innerHTML = 
+        ElementDiv.innerHTML += 
         `
             ${PokemonElementName2 === undefined?'':`<div><img src="${ElementUrl}${PokemonElementName2}.svg" alt="${PokemonElementName2}" class="bg_${PokemonElementName2}"/><p>${PokemonElementName2}</p></div>`}
         `
