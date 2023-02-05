@@ -10,6 +10,7 @@ import {
 var PokeApi = new ClassPokeApi(898)
 var Screen = new ClassScreen()
 var RendererHtml = new ClassRendererHtml()
+var ViewId:number = 0
 
 type FuncMain = {FuncExit:() => void, FuncOpen:() => void, FuncOpenOne:() => void}
 
@@ -24,7 +25,23 @@ class ClassApp {
         this.Header = RendererHtml.CreateElementHeader('PokeDex')
         this.Nav = RendererHtml.CreateElementNav(this.NavList)
         this.HtmlCreation()
-        Screen.OpenScreen('PokeDex')
+
+        var Query:string = window.location.search.substring(1)
+        var QueryArray:Array<any> = Query.split('&')
+        var Params:Array<{name:string, value:string}> = []
+
+        QueryArray.map((Query) => {
+            Params.push({ name:Query.substring(0,Query.indexOf('=')), value:Query.substring(Query.indexOf('=') + 1)})
+        })
+
+        let Resulte = Params.filter((Param) => {return Param.name == 'id'})[0]
+
+        if (Resulte != undefined) {
+            ViewId = Number(Resulte.value)
+            Screen.OpenScreen('View')
+        } else {
+            Screen.OpenScreen('PokeDex')
+        }
     }
     
     private AddScreen(): void {
@@ -62,14 +79,21 @@ class ClassApp {
                 let id:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
     
                 for (let c:number = 0; c <= limit ;c ++) {
+
                     if (RendererBreak) break
     
                     id = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
-                    console.log(`${c}//${id}`)
+
                     await PokeApi.ApiGetPokemon(String(id))
                     .then((Pokemon) => {
     
-                        ElementPokeDex.appendChild(RendererHtml.CreateElementPokemonCart(Pokemon))
+                        let PokemonCart = RendererHtml.CreateElementPokemonCart(Pokemon)
+                        PokemonCart.addEventListener('click', () => {
+                            ViewId = Pokemon.id
+                            Screen.OpenScreen('View')
+                        })
+
+                        ElementPokeDex.appendChild(PokemonCart)
                     })
                     .catch((err) => {
                         RendererBreak = true               
@@ -117,12 +141,60 @@ class ClassApp {
     }
 
     private ScreenView(): FuncMain {
-        let FuncExit = function(): void {
 
+        let PokemonViewLoading = false
+
+        let ElementView = RendererHtml.CreateElement('section', true)
+        ElementView.classList.add('view')
+
+        function RendererPokemonView(id:number) {
+            return new Promise<void>(async (resolve) => {
+
+                if (PokemonViewLoading) return
+                PokemonViewLoading = true
+
+                ElementView.innerHTML = ''
+
+                let ButtonNext = RendererHtml.CreateElement('button', true)
+                let ButtonPrevious = RendererHtml.CreateElement('button', true)
+
+                ButtonNext.innerHTML = 'Proximo'
+                ButtonPrevious.innerHTML = 'Anterior'
+
+                ButtonNext.addEventListener('click', () => {
+                    if (ViewId >= PokeApi.PokemonLimit) return
+                    ViewId ++
+                    RendererPokemonView(ViewId)
+                })
+                ButtonPrevious.addEventListener('click', () => {
+                    if (ViewId == 1) return
+                    ViewId --
+                    RendererPokemonView(ViewId)
+                })
+
+                await PokeApi.ApiGetPokemon(String(id))
+                .then((Pokemon) => {
+
+                    ElementView.appendChild(RendererHtml.CreateElementPokemonImage(Pokemon))
+                    ElementView.appendChild(RendererHtml.CreateElementPokemonName(Pokemon))
+                    ElementView.appendChild(RendererHtml.CreateElementPokemonType(Pokemon))
+                    ElementView.appendChild(ButtonPrevious)
+                    ElementView.appendChild(ButtonNext)
+                })
+
+                resolve()
+                PokemonViewLoading = false
+            })
+        }
+
+        let FuncExit = function(): void {
+            RendererHtml.Main.removeChild(ElementView)
         }
 
         let FuncOpen = function(): void {
-            alert('aberto')
+            RendererHtml.Main.appendChild(ElementView)
+
+            RendererPokemonView(ViewId)
         }
 
         let FuncOpenOne = function(): void {
