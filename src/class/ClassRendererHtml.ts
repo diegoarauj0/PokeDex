@@ -81,7 +81,7 @@ export default class ClassRendererHtml {
         ElementDiv.classList.add('loading')
 
         ElementImg.setAttribute('alt', 'Carregando')
-        ElementImg.setAttribute('src', '../static/img/loading.gif')
+        ElementImg.setAttribute('src', './static/img/loading.gif')
         ElementP.innerHTML = 'Carregando'
 
         ElementDiv.appendChild(ElementImg)
@@ -108,7 +108,7 @@ export default class ClassRendererHtml {
         
         let PokemonElementName1:string | undefined = JsonPokemon.types[0]?.type.name
         let PokemonElementName2:string | undefined = JsonPokemon.types[1]?.type.name
-        let ElementUrl:string = '../static/img/types/'
+        let ElementUrl:string = './static/img/types/'
 
         ElementDiv.classList.add('pokemon_types')
 
