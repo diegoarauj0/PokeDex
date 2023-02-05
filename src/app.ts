@@ -10,7 +10,7 @@ import {
 var PokeApi = new ClassPokeApi(898)
 var Screen = new ClassScreen()
 var RendererHtml = new ClassRendererHtml()
-var ViewId:number = 0
+var ViewId:number = 1
 
 type FuncMain = {FuncExit:() => void, FuncOpen:() => void, FuncOpenOne:() => void}
 
@@ -157,6 +157,11 @@ class ClassApp {
 
                 let ButtonNext = RendererHtml.CreateElement('button', true)
                 let ButtonPrevious = RendererHtml.CreateElement('button', true)
+                let ElementDiv = RendererHtml.CreateElement('div',false)
+                ElementDiv.classList.add('pokemon_button_view')
+
+                ElementDiv.appendChild(ButtonNext)
+                ElementDiv.appendChild(ButtonPrevious)
 
                 ButtonNext.innerHTML = 'Proximo'
                 ButtonPrevious.innerHTML = 'Anterior'
@@ -178,8 +183,7 @@ class ClassApp {
                     ElementView.appendChild(RendererHtml.CreateElementPokemonImage(Pokemon))
                     ElementView.appendChild(RendererHtml.CreateElementPokemonName(Pokemon))
                     ElementView.appendChild(RendererHtml.CreateElementPokemonType(Pokemon))
-                    ElementView.appendChild(ButtonPrevious)
-                    ElementView.appendChild(ButtonNext)
+                    ElementView.appendChild(ElementDiv)
                 })
 
                 resolve()
