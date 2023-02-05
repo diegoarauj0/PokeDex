@@ -45,16 +45,72 @@ class ClassApp {
 
     private ScreenPokeDex(): FuncMain {
 
+        let PokemonCartLoading:boolean = false
+        let RendererBreak:boolean = false
+        let ScrollPart:number = 10
+
+        let ElementPokeDex = RendererHtml.CreateElement('section', true)
+        ElementPokeDex.classList.add('pokedex')
+
+        function RendererListPokemonCart(limit:number): Promise<void> {
+
+            return new Promise(async (resolve) => {
+
+                if (PokemonCartLoading) return
+    
+                PokemonCartLoading = true
+                let id:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
+    
+                for (let c:number = 0; c <= limit ;c ++) {
+                    if (RendererBreak) break
+    
+                    id = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
+                    console.log(`${c}//${id}`)
+                    await PokeApi.ApiGetPokemon(String(id))
+                    .then((Pokemon) => {
+    
+                        ElementPokeDex.appendChild(RendererHtml.CreateElementPokemonCart(Pokemon))
+                    })
+                    .catch((err) => {
+                        RendererBreak = true               
+                        return
+                    })
+    
+                }
+                resolve()
+                RendererBreak = false
+                PokemonCartLoading = false
+            })
+        }
+
         let FuncExit = function(): void {
-
+            RendererHtml.Main.removeChild(ElementPokeDex)
         }
 
-        let FuncOpen = function(): void {
-            alert('aberto')
+        let FuncOpen = async function() {
+            RendererHtml.Main.appendChild(ElementPokeDex)
+
+            let ListPokemonCart:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
+
+            if (ListPokemonCart < ScrollPart) {
+                await RendererListPokemonCart(ScrollPart)
+            }
         }
 
-        let FuncOpenOne = function(): void {
+        let FuncOpenOne = async function() {
+            //sem css isso n funciona ;-;
+            /*RendererHtml.Main.addEventListener('scroll', async () => {
 
+                if (Screen.GetScreenNow?.Id !== 'PokeDex') return
+                await SetTime(120)
+
+                let InformationMain = RendererHtml.Main.getBoundingClientRect()
+                let InformationPokeDex = ElementPokeDex.getBoundingClientRect()
+    
+                if (InformationMain.bottom + (InformationMain.bottom / 4) >= InformationPokeDex.bottom) {
+                    console.log('2')  
+                }
+            })*/
         }
 
         return {FuncExit, FuncOpen, FuncOpenOne}
@@ -76,4 +132,13 @@ class ClassApp {
         return {FuncExit, FuncOpen, FuncOpenOne}
     }
 }
+
+function SetTime(time:number): Promise<void>{
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve()
+        },time)
+    })
+}
+
 var App = new ClassApp()
