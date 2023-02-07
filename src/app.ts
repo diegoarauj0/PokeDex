@@ -2,11 +2,6 @@ import ClassPokeApi from "./class/ClassPokeApi.js"
 import ClassScreen from "./class/ClassScreen.js"
 import ClassRendererHtml from "./class/ClassRendererHtml.js"
 
-import {
-    SaveScreen,
-    CreateScreen
-} from './interface/TypeScreen'
-
 var PokeApi = new ClassPokeApi(898)
 var Screen = new ClassScreen()
 var RendererHtml = new ClassRendererHtml()
@@ -76,31 +71,30 @@ class ClassApp {
                 if (PokemonCartLoading) return
     
                 PokemonCartLoading = true
-                let id:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
-    
+
+                let ElementLoading = RendererHtml.CreateLoading()
+                
                 for (let c:number = 0; c <= limit ;c ++) {
 
-                    if (RendererBreak) break
+                    try
+                    {
+                        if (RendererBreak) break
     
-                    id = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
+                        let id:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
 
-                    await PokeApi.ApiGetPokemon(String(id))
-                    .then(async (Pokemon) => {
-
+                        ElementPokeDex.appendChild(ElementLoading)
                         let PokemonCart = await RendererHtml.CreateElementPokemonCart(id,PokeApi)
+    
                         PokemonCart.addEventListener('click', () => {
-                            ViewId = Pokemon.id
+                            ViewId = id
                             Screen.OpenScreen('View')
                         })
-
+                        
+                        ElementPokeDex.removeChild(ElementLoading)
                         ElementPokeDex.appendChild(PokemonCart)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        RendererBreak = true               
-                        return
-                    })
-    
+                    } catch(err) {
+                        
+                    }
                 }
                 resolve()
                 RendererBreak = false
@@ -152,17 +146,21 @@ class ClassApp {
             return new Promise<void>(async (resolve) => {
 
                 if (PokemonViewLoading) return
+
+                ElementView.id = '0'
                 PokemonViewLoading = true
 
                 ElementView.innerHTML = ''
+                let ElementLoading = RendererHtml.CreateLoading()
+                ElementView.appendChild(ElementLoading)
 
                 let ButtonNext = RendererHtml.CreateElement('button', true)
                 let ButtonPrevious = RendererHtml.CreateElement('button', true)
                 let ElementDivControl = RendererHtml.CreateElement('div',false)
                 ElementDivControl.classList.add('pokemon_button_view')
 
-                ElementDivControl.appendChild(ButtonNext)
                 ElementDivControl.appendChild(ButtonPrevious)
+                ElementDivControl.appendChild(ButtonNext)
 
                 ButtonNext.innerHTML = 'Proximo'
                 ButtonPrevious.innerHTML = 'Anterior'
@@ -178,15 +176,24 @@ class ClassApp {
                     RendererPokemonView(ViewId)
                 })
 
-                await PokeApi.ApiGetPokemon(String(id))
-                .then(async (Pokemon) => {
-
-                    ElementView.appendChild(await RendererHtml.CreateElementPokemonImage(id,PokeApi))
-                    ElementView.appendChild(await RendererHtml.CreateElementPokemonName(id,PokeApi))
-                    ElementView.appendChild(await RendererHtml.CreateElementPokemonType(id,PokeApi))
-                    ElementView.appendChild(await RendererHtml.CreateElementPokemonStats(id,PokeApi))
+                try
+                {
+                    let ElementPokemonImage = await RendererHtml.CreateElementPokemonImage(id,PokeApi)
+                    let ElementPokemonName = await RendererHtml.CreateElementPokemonName(id,PokeApi)
+                    let ElementPokemonType = await RendererHtml.CreateElementPokemonType(id,PokeApi)
+                    let ElementPokemonStats = await RendererHtml.CreateElementPokemonStats(id,PokeApi)
+                    ElementView.removeChild(ElementLoading)
+                    ElementView.appendChild(ElementPokemonImage)
+                    ElementView.appendChild(ElementPokemonName)
                     ElementView.appendChild(ElementDivControl)
-                })
+                    ElementView.appendChild(ElementPokemonType)
+                    ElementView.appendChild(ElementPokemonStats)
+                    ElementView.id = String(id)
+                }
+                catch(err)
+                {
+                    ElementView.removeChild(ElementLoading)
+                }
 
                 resolve()
                 PokemonViewLoading = false

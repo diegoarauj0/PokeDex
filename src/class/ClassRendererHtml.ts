@@ -176,6 +176,7 @@ export default class ClassRendererHtml {
     public CreateElementPokemonCart(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
 
         return new Promise((resolve,reject) => {
+            let Loading = this.CreateLoading()
             PokeApi.ApiGetPokemon(String(Id))
             .then(async (Pokemon) => {
                 let ElementDiv = this.CreateElement('div', true)
@@ -203,7 +204,7 @@ export default class ClassRendererHtml {
         return new Promise((resolve,reject) => {
             PokeApi.ApiGetPokemon(String(Id))
             .then((Pokemon) => {
-                
+
                 let ElementDiv = this.CreateElement('div', true)
                 let ElementTable = this.CreateElement('table',true)
                 let ElementThead = this.CreateElement('thead',false)
