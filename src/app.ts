@@ -85,9 +85,9 @@ class ClassApp {
                     id = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
 
                     await PokeApi.ApiGetPokemon(String(id))
-                    .then((Pokemon) => {
-    
-                        let PokemonCart = RendererHtml.CreateElementPokemonCart(Pokemon)
+                    .then(async (Pokemon) => {
+
+                        let PokemonCart = await RendererHtml.CreateElementPokemonCart(id,PokeApi)
                         PokemonCart.addEventListener('click', () => {
                             ViewId = Pokemon.id
                             Screen.OpenScreen('View')
@@ -96,6 +96,7 @@ class ClassApp {
                         ElementPokeDex.appendChild(PokemonCart)
                     })
                     .catch((err) => {
+                        console.log(err)
                         RendererBreak = true               
                         return
                     })
@@ -157,11 +158,11 @@ class ClassApp {
 
                 let ButtonNext = RendererHtml.CreateElement('button', true)
                 let ButtonPrevious = RendererHtml.CreateElement('button', true)
-                let ElementDiv = RendererHtml.CreateElement('div',false)
-                ElementDiv.classList.add('pokemon_button_view')
+                let ElementDivControl = RendererHtml.CreateElement('div',false)
+                ElementDivControl.classList.add('pokemon_button_view')
 
-                ElementDiv.appendChild(ButtonNext)
-                ElementDiv.appendChild(ButtonPrevious)
+                ElementDivControl.appendChild(ButtonNext)
+                ElementDivControl.appendChild(ButtonPrevious)
 
                 ButtonNext.innerHTML = 'Proximo'
                 ButtonPrevious.innerHTML = 'Anterior'
@@ -178,12 +179,13 @@ class ClassApp {
                 })
 
                 await PokeApi.ApiGetPokemon(String(id))
-                .then((Pokemon) => {
+                .then(async (Pokemon) => {
 
-                    ElementView.appendChild(RendererHtml.CreateElementPokemonImage(Pokemon))
-                    ElementView.appendChild(RendererHtml.CreateElementPokemonName(Pokemon))
-                    ElementView.appendChild(RendererHtml.CreateElementPokemonType(Pokemon))
-                    ElementView.appendChild(ElementDiv)
+                    ElementView.appendChild(await RendererHtml.CreateElementPokemonImage(id,PokeApi))
+                    ElementView.appendChild(await RendererHtml.CreateElementPokemonName(id,PokeApi))
+                    ElementView.appendChild(await RendererHtml.CreateElementPokemonType(id,PokeApi))
+                    ElementView.appendChild(await RendererHtml.CreateElementPokemonStats(id,PokeApi))
+                    ElementView.appendChild(ElementDivControl)
                 })
 
                 resolve()
