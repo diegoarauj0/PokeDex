@@ -211,17 +211,22 @@ export default class ClassRendererHtml {
         })
     }
 
-    public CreateElementPokemonCart(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
+    public CreateElementPokemonCart(Id:number,PokeApi:ClassPokeApi, EventClick:EventListenerOrEventListenerObject): Promise<HTMLElement> {
 
         return new Promise(async(resolve,reject) => {
 
             let ElementDiv = this.CreateElement('div', true)
+            let ElementButtonView = this.CreateElement('button',false)
             let ElementPokemonName = await this.CreateElementPokemonName(Id,PokeApi)
             let ElementPokemonImage = await this.CreateElementPokemonImage(Id,PokeApi)
             let ElementPokemonType = await this.CreateElementPokemonType(Id,PokeApi)
     
             ElementDiv.classList.add('pokemon_cart')
 
+            ElementButtonView.innerHTML = 'View'
+
+            ElementButtonView.addEventListener('click', EventClick)
+            ElementPokemonName.appendChild(ElementButtonView)
             ElementDiv.appendChild(ElementPokemonName)
             ElementDiv.appendChild(ElementPokemonImage)
             ElementDiv.appendChild(ElementPokemonType)

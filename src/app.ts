@@ -83,13 +83,11 @@ class ClassApp {
                         let id:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
 
                         ElementPokeDex.appendChild(ElementLoading)
-                        let PokemonCart = await RendererHtml.CreateElementPokemonCart(id,PokeApi)
-    
-                        PokemonCart.addEventListener('click', () => {
+                        let PokemonCart = await RendererHtml.CreateElementPokemonCart(id,PokeApi, () => {
                             ViewId = id
                             Screen.OpenScreen('View')
                         })
-                        
+    
                         ElementPokeDex.removeChild(ElementLoading)
                         ElementPokeDex.appendChild(PokemonCart)
                     } catch(err) {
@@ -117,19 +115,15 @@ class ClassApp {
         }
 
         let FuncOpenOne = async function() {
-            //sem css isso n funciona ;-;
-            /*RendererHtml.Main.addEventListener('scroll', async () => {
+            ElementPokeDex.addEventListener('scroll', async () => {
 
                 if (Screen.GetScreenNow?.Id !== 'PokeDex') return
                 await SetTime(120)
 
-                let InformationMain = RendererHtml.Main.getBoundingClientRect()
-                let InformationPokeDex = ElementPokeDex.getBoundingClientRect()
-    
-                if (InformationMain.bottom + (InformationMain.bottom / 4) >= InformationPokeDex.bottom) {
-                    console.log('2')  
+                if (ElementPokeDex.scrollTop + ElementPokeDex.clientHeight >= ElementPokeDex.scrollHeight) {
+                    await RendererListPokemonCart(ScrollPart)
                 }
-            })*/
+            })
         }
 
         return {FuncExit, FuncOpen, FuncOpenOne}
