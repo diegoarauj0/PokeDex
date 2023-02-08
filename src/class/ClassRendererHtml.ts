@@ -275,4 +275,39 @@ export default class ClassRendererHtml {
             resolve(ElementDiv)
         })
     }
+
+    public CreateElementPokemonView(Id:number,PokeApi:ClassPokeApi,Event:{Next:() => void,Previous:() => void}): Promise<HTMLElement> {
+
+        return new Promise(async (resolve,reject) => {
+
+            let ElementDiv = this.CreateElement('div', true)
+            let ButtonNext = this.CreateElement('button', true)
+            let ButtonPrevious = this.CreateElement('button', true)
+            let ElementDivControl = this.CreateElement('div',false)
+            let ElementPokemonName = await this.CreateElementPokemonName(Id,PokeApi)
+            let ElementPokemonImage = await this.CreateElementPokemonImage(Id,PokeApi)
+            let ElementPokemonType = await this.CreateElementPokemonType(Id,PokeApi)
+            let ElementPokemonStats = await this.CreateElementPokemonStats(Id,PokeApi)
+            
+            ElementDiv.classList.add('view')
+            ElementDivControl.classList.add('pokemon_button_view')
+
+            ButtonNext.innerHTML = 'Proximo'
+            ButtonPrevious.innerHTML = 'Anterior'
+
+            ButtonNext.addEventListener('click', Event.Next)
+            ButtonPrevious.addEventListener('click', Event.Previous)
+
+            ElementDivControl.appendChild(ButtonPrevious)
+            ElementDivControl.appendChild(ButtonNext)
+
+            ElementDiv.appendChild(ElementPokemonImage)
+            ElementDiv.appendChild(ElementPokemonName)
+            ElementDiv.appendChild(ElementDivControl)
+            ElementDiv.appendChild(ElementPokemonType)
+            ElementDiv.appendChild(ElementPokemonStats)
+
+            resolve(ElementDiv)
+        })
+    }
 }
