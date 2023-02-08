@@ -76,6 +76,21 @@ export default class ClassRendererHtml {
         return ElementNav
     }
 
+    private CreateElementImageErr(): HTMLElement {
+
+
+        let ElementImg = this.CreateElement('img',false)
+
+        ElementImg.classList.add('err')
+
+        ElementImg.setAttribute('alt', 'err 404')
+        ElementImg.setAttribute('src', './static/img/err404.png')
+
+        ElementImg.innerHTML += '<!--https://pixabay.com/pt/users/2funki4wheelz-2863996/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1513925-->'
+
+        return ElementImg
+    }
+
     public CreateLoading(): HTMLElement {
 
         let ElementDiv = this.CreateElement('div',true)
@@ -95,32 +110,42 @@ export default class ClassRendererHtml {
     }
 
     public CreateElementPokemonName(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
-        return new Promise((resolve,reject) => {
-            PokeApi.ApiGetPokemon(String(Id))
-            .then((Pokemon) => {
-                let ElementDiv = this.CreateElement('div', true)
-                let ElementP = this.CreateElement('p', false)
+        return new Promise(async (resolve,reject) => {
+
+            let ElementDiv = this.CreateElement('div', true)
+            let ElementP = this.CreateElement('p', false)
+            ElementDiv.classList.add('pokemon_name')
+
+            try 
+            {
+                let Pokemon = await PokeApi.ApiGetPokemon(String(Id))
         
-                ElementDiv.classList.add('pokemon_name')
                 ElementP.innerHTML = `${Pokemon.name}#${Pokemon.id}`
                 ElementDiv.appendChild(ElementP)
         
-                resolve(ElementDiv)
-            })
-            .catch((err) => {reject(err)})
+            }
+            catch(err) {
+        
+                ElementP.innerHTML = 'Nome não encontrado'
+                ElementDiv.appendChild(ElementP)
+            }
+
+            resolve(ElementDiv)
         })
     }
 
     public CreateElementPokemonType(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
 
-        return new Promise((resolve,reject) => {
-            PokeApi.ApiGetPokemon(String(Id))
-            .then((Pokemon) => {
+        return new Promise(async (resolve,reject) => {
 
-                let ElementDiv = this.CreateElement('div', true)
+            let ElementDiv = this.CreateElement('div', true)
+            ElementDiv.classList.add('pokemon_types')
+
+            try
+            {
+                let Pokemon = await PokeApi.ApiGetPokemon(String(Id))
+
                 let ElementUrl:string = './static/img/types/'
-        
-                ElementDiv.classList.add('pokemon_types')
         
                 Pokemon.types.map((Types) => {
                     ElementDiv.innerHTML += 
@@ -131,22 +156,33 @@ export default class ClassRendererHtml {
                         </div>`
                 })
 
-                resolve(ElementDiv)
-            })
-            .catch((err) => {reject(err)})
+            }
+            catch(err) {
+
+            }
+            
+            resolve(ElementDiv)
         })
     }
 
     public CreateElementPokemonImage(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
 
-        return new Promise((resolve,reject) => {
-            PokeApi.ApiGetPokemon(String(Id))
-            .then((Pokemon) => {
-                let ElementDiv = this.CreateElement('div', true)
+        return new Promise(async (resolve,reject) => {
+
+            let ElementDiv = this.CreateElement('div', true)
+            ElementDiv.classList.add('pokemon_img')
+            ElementDiv.classList.add('img')
+
+            try
+            {
+                let Pokemon = await PokeApi.ApiGetPokemon(String(Id))
+
                 let ElementImg = this.CreateElement('img', false)
                 let ElementButton = this.CreateElement('button', false)
                 let PokemonImageShiny:boolean = true
         
+                ElementDiv.classList.add(`bg_${Pokemon.types[0]?.type.name || ''}`)
+
                 ElementImg.setAttribute('alt', `Photo ${Pokemon.name}`)
                 ElementImg.setAttribute('src',Pokemon.sprites.other['official-artwork'].front_default || '')
         
@@ -162,50 +198,50 @@ export default class ClassRendererHtml {
                     ElementImg.setAttribute('src',Pokemon.sprites.other['official-artwork'].front_shiny || '')
                 })
         
-                ElementDiv.classList.add('pokemon_img')
-                ElementDiv.classList.add('img')
-                ElementDiv.appendChild(ElementImg)
                 ElementDiv.appendChild(ElementButton)
-        
-                resolve(ElementDiv)
-            })
-            .catch((err) => {reject(err)})
+                ElementDiv.appendChild(ElementImg)
+            }
+            catch(err) {
+
+                let ElementImg = this.CreateElementImageErr()
+                ElementDiv.appendChild(ElementImg)
+            }
+    
+            resolve(ElementDiv)
         })
     }
 
     public CreateElementPokemonCart(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
 
-        return new Promise((resolve,reject) => {
-            let Loading = this.CreateLoading()
-            PokeApi.ApiGetPokemon(String(Id))
-            .then(async (Pokemon) => {
-                let ElementDiv = this.CreateElement('div', true)
-                let ElementPokemonName = await this.CreateElementPokemonName(Id,PokeApi)
-                let ElementPokemonImage = await this.CreateElementPokemonImage(Id,PokeApi)
-                let ElementPokemonType = await this.CreateElementPokemonType(Id,PokeApi)
-        
-                let PokemonElementName1:string | undefined = Pokemon.types[0]?.type.name
-        
-                ElementDiv.classList.add('pokemon_cart')
-                ElementDiv.classList.add(`bg_${PokemonElementName1}`)
-        
-                ElementDiv.appendChild(ElementPokemonName)
-                ElementDiv.appendChild(ElementPokemonImage)
-                ElementDiv.appendChild(ElementPokemonType)
-        
-                resolve(ElementDiv)
-            })
-            .catch((err) => {reject(err)})
+        return new Promise(async(resolve,reject) => {
+
+            let ElementDiv = this.CreateElement('div', true)
+            let ElementPokemonName = await this.CreateElementPokemonName(Id,PokeApi)
+            let ElementPokemonImage = await this.CreateElementPokemonImage(Id,PokeApi)
+            let ElementPokemonType = await this.CreateElementPokemonType(Id,PokeApi)
+    
+            ElementDiv.classList.add('pokemon_cart')
+
+            ElementDiv.appendChild(ElementPokemonName)
+            ElementDiv.appendChild(ElementPokemonImage)
+            ElementDiv.appendChild(ElementPokemonType)
+    
+            resolve(ElementDiv)
+
         })
     }
 
     public CreateElementPokemonStats(Id:number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
         
-        return new Promise((resolve,reject) => {
-            PokeApi.ApiGetPokemon(String(Id))
-            .then((Pokemon) => {
+        return new Promise(async (resolve,reject) => {
 
-                let ElementDiv = this.CreateElement('div', true)
+            let ElementDiv = this.CreateElement('div', true)
+            ElementDiv.classList.add('pokemon_stats')
+
+            try
+            {
+                let Pokemon = await PokeApi.ApiGetPokemon(String(Id))
+
                 let ElementTable = this.CreateElement('table',true)
                 let ElementThead = this.CreateElement('thead',false)
                 let ElementTbody = this.CreateElement('tbody', false)
@@ -231,11 +267,12 @@ export default class ClassRendererHtml {
         
                 ElementDiv.appendChild(ElementTable)
         
-                ElementDiv.classList.add('pokemon_stats')
-        
-                resolve(ElementDiv)
-            })
-            .catch((err) => {reject(err)})
+            }
+            catch(err) {
+                
+            }
+
+            resolve(ElementDiv)
         })
     }
 }
