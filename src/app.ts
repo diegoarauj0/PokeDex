@@ -2,7 +2,7 @@ import ClassPokeApi from "./class/ClassPokeApi.js"
 import ClassScreen from "./class/ClassScreen.js"
 import ClassRendererHtml from "./class/ClassRendererHtml.js"
 
-var PokeApi = new ClassPokeApi(898)
+var PokeApi = new ClassPokeApi(1008)
 var Screen = new ClassScreen()
 var RendererHtml = new ClassRendererHtml()
 var ViewId:number = 1

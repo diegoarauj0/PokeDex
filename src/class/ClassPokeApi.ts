@@ -73,7 +73,7 @@ export default class ClassPokeApi {
         this.header.append('Content-Type', 'application/json')
     }
     //Berries
-    public ApiGetBerries(value:string) {
+    public ApiGetBerries(value:string | number) {
         return new Promise<Berry>((resolve,reject) => {
             fetch(`${this.url}berry/${value}`,
             {
@@ -86,7 +86,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetBerryFirmness(value:string) {
+    public ApiGetBerryFirmness(value:string | number) {
         return new Promise<BerryFirmness>((resolve,reject) => {
             fetch(`${this.url}berry-firmness/${value}`,
             {
@@ -99,7 +99,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public GetBerryFlavor(value:string) {
+    public GetBerryFlavor(value:string | number) {
         return new Promise<BerryFlavor>((resolve,reject) => {
             fetch(`${this.url}berry-flavor/${value}`,
             {
@@ -114,7 +114,7 @@ export default class ClassPokeApi {
     //Berries
 
     //Contests
-    public ApiGetContestTypes(value:string) {
+    public ApiGetContestTypes(value:string | number) {
         return new Promise<ContestType>((resolve,reject) => {
             fetch(`${this.url}contest-type/${value}`,
             {
@@ -127,7 +127,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetContestEffect(id:number) {
+    public ApiGetContestEffect(id:number | string) {
         return new Promise<ContestEffect>((resolve,reject) => {
             fetch(`${this.url}contest-effect/${id}`,
             {
@@ -140,7 +140,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetSuperContestEffect(id:number) {
+    public ApiGetSuperContestEffect(id:number | string) {
         return new Promise<SuperContestEffect>((resolve,reject) => {
             fetch(`${this.url}super-contest-effect/${id}`,
             {
@@ -155,7 +155,7 @@ export default class ClassPokeApi {
     //Contests
 
     //Encounters
-    public ApiGetEncounterMethod(value:string) {
+    public ApiGetEncounterMethod(value:string | number) {
         return new Promise<EncounterMethod>((resolve,reject) => {
             fetch(`${this.url}encounter-method/${value}`,
             {
@@ -168,7 +168,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetEncounterCondition(value:string) {
+    public ApiGetEncounterCondition(value:string | number) {
         return new Promise<EncounterCondition>((resolve,reject) => {
             fetch(`${this.url}encounter-condition/${value}`,
             {
@@ -181,7 +181,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetEncounterConditionValue(value:string) {
+    public ApiGetEncounterConditionValue(value:string | number) {
         return new Promise<EncounterConditionValue>((resolve,reject) => {
             fetch(`${this.url}encounter-condition-value/${value}`,
             {
@@ -195,7 +195,7 @@ export default class ClassPokeApi {
     }
     //Encounters
     //Evolution
-    public ApiGetEvolutionChain(id:number) {
+    public ApiGetEvolutionChain(id:number | string) {
         return new Promise<EvolutionChain>((resolve,reject) => {
             fetch(`${this.url}evolution-chain/${id}`,
             {
@@ -208,7 +208,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetEvolutionTrigger(value:string) {
+    public ApiGetEvolutionTrigger(value:string | number) {
         return new Promise<EvolutionTrigger>((resolve,reject) => {
             fetch(`${this.url}evolution-trigger/${value}`,
             {
@@ -222,7 +222,7 @@ export default class ClassPokeApi {
     }
     //Evolution
     //Games
-    public ApiGetGeneration(value:string) {
+    public ApiGetGeneration(value:string | number) {
         return new Promise<Generation>((resolve,reject) => {
             fetch(`${this.url}generation/${value}`,
             {
@@ -235,7 +235,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokedex(value:string) {
+    public ApiGetPokedex(value:string | number) {
         return new Promise<Pokedex>((resolve,reject) => {
             fetch(`${this.url}pokedex/${value}`,
             {
@@ -248,7 +248,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetVersion(value:string) {
+    public ApiGetVersion(value:string | number) {
         return new Promise<Version>((resolve,reject) => {
             fetch(`${this.url}version/${value}`,
             {
@@ -261,7 +261,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetVersionGroup(value:string) {
+    public ApiGetVersionGroup(value:string | number) {
         return new Promise<VersionGroup>((resolve,reject) => {
             fetch(`${this.url}version-group/${value}`,
             {
@@ -275,7 +275,7 @@ export default class ClassPokeApi {
     }
     //Games
     //Items
-    public ApiGetItem(value:string) {
+    public ApiGetItem(value:string | number) {
         return new Promise<Item>((resolve,reject) => {
             fetch(`${this.url}item/${value}`,
             {
@@ -288,7 +288,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetItemAttribute(value:string) {
+    public ApiGetItemAttribute(value:string | number) {
         return new Promise<ItemAttribute>((resolve,reject) => {
             fetch(`${this.url}item-attribute/${value}`,
             {
@@ -301,7 +301,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetItemCategory(value:string) {
+    public ApiGetItemCategory(value:string | number) {
         return new Promise<ItemCategory>((resolve,reject) => {
             fetch(`${this.url}item-category/${value}`,
             {
@@ -314,7 +314,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetItemFlingEffect(value:string) {
+    public ApiGetItemFlingEffect(value:string | number) {
         return new Promise<ItemFlingEffect>((resolve,reject) => {
             fetch(`${this.url}item-fling-effect/${value}`,
             {
@@ -327,7 +327,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetItemPocket(value:string) {
+    public ApiGetItemPocket(value:string | number) {
         return new Promise<ItemPocket>((resolve,reject) => {
             fetch(`${this.url}item-pocket/${value}`,
             {
@@ -341,7 +341,7 @@ export default class ClassPokeApi {
     }
     //Items
     //Location
-    public ApiGetLocation(value:string) {
+    public ApiGetLocation(value:string | number) {
         return new Promise<Location>((resolve,reject) => {
             fetch(`${this.url}location/${value}`,
             {
@@ -354,7 +354,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetLocationArea(value:string) {
+    public ApiGetLocationArea(value:string | number) {
         return new Promise<LocationArea>((resolve,reject) => {
             fetch(`${this.url}location-area/${value}`,
             {
@@ -367,7 +367,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPalParkArea(value:string) {
+    public ApiGetPalParkArea(value:string | number) {
         return new Promise<PalParkArea>((resolve,reject) => {
             fetch(`${this.url}pal-park-area/${value}`,
             {
@@ -380,7 +380,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetRegion(value:string) {
+    public ApiGetRegion(value:string | number) {
         return new Promise<Region>((resolve,reject) => {
             fetch(`${this.url}region/${value}`,
             {
@@ -394,7 +394,7 @@ export default class ClassPokeApi {
     }
     //Location
     //Machines
-    public ApiGetMachine(id:number) {
+    public ApiGetMachine(id:number | string) {
         return new Promise<Machine>((resolve,reject) => {
             fetch(`${this.url}machine/${id}`,
             {
@@ -408,7 +408,7 @@ export default class ClassPokeApi {
     }
     //Machines
     //Moves
-    public ApiGetMove(value:string) {
+    public ApiGetMove(value:string | number) {
         return new Promise<Move>((resolve,reject) => {
             fetch(`${this.url}move/${value}`,
             {
@@ -421,7 +421,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetMoveAilment(value:string) {
+    public ApiGetMoveAilment(value:string | number) {
         return new Promise<MoveAilment>((resolve,reject) => {
             fetch(`${this.url}move-ailment/${value}`,
             {
@@ -434,7 +434,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetMoveBattleStyle(value:string) {
+    public ApiGetMoveBattleStyle(value:string | number) {
         return new Promise<MoveBattleStyle>((resolve,reject) => {
             fetch(`${this.url}move-battle-style/${value}`,
             {
@@ -447,7 +447,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetMoveCategory(value:string) {
+    public ApiGetMoveCategory(value:string | number) {
         return new Promise<MoveCategory>((resolve,reject) => {
             fetch(`${this.url}move-category/${value}`,
             {
@@ -460,7 +460,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetMoveDamageClass(value:string) {
+    public ApiGetMoveDamageClass(value:string | number) {
         return new Promise<MoveDamageClass>((resolve,reject) => {
             fetch(`${this.url}move-damage-class/${value}`,
             {
@@ -473,7 +473,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetMoveLearnMethod(value:string) {
+    public ApiGetMoveLearnMethod(value:string | number) {
         return new Promise<MoveLearnMethod>((resolve,reject) => {
             fetch(`${this.url}move-learn-method/${value}`,
             {
@@ -486,7 +486,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetMoveTarget(value:string) {
+    public ApiGetMoveTarget(value:string | number) {
         return new Promise<MoveTarget>((resolve,reject) => {
             fetch(`${this.url}move-target/${value}`,
             {
@@ -500,7 +500,7 @@ export default class ClassPokeApi {
     }
     //Moves
     //Pokemon
-    public ApiGetAbility(value:string) {
+    public ApiGetAbility(value:string | number) {
         return new Promise<Ability>((resolve,reject) => {
             fetch(`${this.url}ability/${value}`,
             {
@@ -513,7 +513,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetCharacteristic(id:number) {
+    public ApiGetCharacteristic(id:string |number) {
         return new Promise<Characteristic>((resolve,reject) => {
             fetch(`${this.url}characteristic/${id}`,
             {
@@ -526,7 +526,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetEggGroup(value:string) {
+    public ApiGetEggGroup(value:string | number) {
         return new Promise<EggGroup>((resolve,reject) => {
             fetch(`${this.url}egg-group/${value}`,
             {
@@ -539,7 +539,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetGender(value:string) {
+    public ApiGetGender(value:string | number) {
         return new Promise<Gender>((resolve,reject) => {
             fetch(`${this.url}gender/${value}`,
             {
@@ -552,7 +552,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetGrowthRate(value:string) {
+    public ApiGetGrowthRate(value:string | number) {
         return new Promise<GrowthRate>((resolve,reject) => {
             fetch(`${this.url}growth-rate/${value}`,
             {
@@ -565,7 +565,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetNature(value:string) {
+    public ApiGetNature(value:string | number) {
         return new Promise<Nature>((resolve,reject) => {
             fetch(`${this.url}nature/${value}`,
             {
@@ -578,7 +578,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokeathlonStat(value:string) {
+    public ApiGetPokeathlonStat(value:string | number) {
         return new Promise<PokeathlonStat>((resolve,reject) => {
             fetch(`${this.url}pokeathlon-stat/${value}`,
             {
@@ -591,7 +591,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokemon(value:string) {
+    public ApiGetPokemon(value:string | number) {
         return new Promise<Pokemon>((resolve,reject) => {
 
             if (Number(value) > this.PokemonLimit) {reject('limite')}
@@ -606,7 +606,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public LocationAreaEncounter(value:string) {
+    public LocationAreaEncounter(value:string | number) {
         return new Promise<LocationAreaEncounter>((resolve,reject) => {
             fetch(`${this.url}pokemon/${value}/encounters`,
             {
@@ -619,7 +619,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokemonColor(value:string) {
+    public ApiGetPokemonColor(value:string | number) {
         return new Promise<PokemonColor>((resolve,reject) => {
             fetch(`${this.url}pokemon-color/${value}`,
             {
@@ -632,7 +632,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokemonForm(value:string) {
+    public ApiGetPokemonForm(value:string | number) {
         return new Promise<PokemonForm>((resolve,reject) => {
             fetch(`${this.url}pokemon-form/${value}`,
             {
@@ -645,7 +645,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokemonHabitat(value:string) {
+    public ApiGetPokemonHabitat(value:string | number) {
         return new Promise<PokemonHabitat>((resolve,reject) => {
             fetch(`${this.url}pokemon-habitat/${value}`,
             {
@@ -658,7 +658,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokemonShape(value:string) {
+    public ApiGetPokemonShape(value:string | number) {
         return new Promise<PokemonShape>((resolve,reject) => {
             fetch(`${this.url}pokemon-shape/${value}`,
             {
@@ -671,7 +671,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetPokemonSpecies(value:string) {
+    public ApiGetPokemonSpecies(value:string | number) {
         return new Promise<PokemonSpecies>((resolve,reject) => {
             fetch(`${this.url}pokemon-species/${value}`,
             {
@@ -684,7 +684,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetStat(value:string) {
+    public ApiGetStat(value:string | number) {
         return new Promise<Stat>((resolve,reject) => {
             fetch(`${this.url}stat/${value}`,
             {
@@ -697,7 +697,7 @@ export default class ClassPokeApi {
         })
     }
 
-    public ApiGetType(value:string) {
+    public ApiGetType(value:string | number) {
         return new Promise<Type>((resolve,reject) => {
             fetch(`${this.url}type/${value}`,
             {
