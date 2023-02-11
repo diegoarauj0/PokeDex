@@ -37,6 +37,11 @@ class ClassApp {
         } else {
             Screen.OpenScreen('PokeDex')
         }
+
+        PokeApi.ApiGetPokemon('https://pokeapi.co/api/v2/pokemon/1')
+        .then((Pokemon) => {
+            console.log(Pokemon)
+        })
     }
     
     private AddScreen(): void {
