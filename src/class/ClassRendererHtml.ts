@@ -326,14 +326,13 @@ export default class ClassRendererHtml {
 
         return new Promise(async (resolve) => {
 
-            let ElementDiv = this.CreateElement('div', true)
             let PokemonSpecies = await PokeApi.ApiGetPokemonSpecies(value)
 
             let EvolutionChainUrl:string = PokemonSpecies.evolution_chain.url
 
             let PokemonEvolutionChain = await PokeApi.ApiGetEvolutionChain(EvolutionChainUrl)
 
-            ElementDiv.appendChild(await this.CreatePokemonBoxEvolution(PokemonEvolutionChain.chain,PokeApi))
+            let ElementDiv = await this.CreatePokemonBoxEvolution(PokemonEvolutionChain.chain,PokeApi)
 
             resolve(ElementDiv)
         })
@@ -344,7 +343,7 @@ export default class ClassRendererHtml {
         return new Promise(async (resolve) => {
 
             let CreateDescription = (Detail:EvolutionDetail): HTMLElement => {
-                let ElementDescription = this.CreateElement('div',false)
+                let ElementDescription = this.CreateElement('div',true)
 
                 ElementDescription.classList.add('pokemon_description')
 
