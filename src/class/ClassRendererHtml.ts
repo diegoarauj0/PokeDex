@@ -329,13 +329,9 @@ export default class ClassRendererHtml {
             let ElementDiv = this.CreateElement('div', true)
             let PokemonSpecies = await PokeApi.ApiGetPokemonSpecies(value)
 
-            let UrlEvolutionChain:string = PokemonSpecies.evolution_chain.url
-            let IdEvolutionChain:string = UrlEvolutionChain.substring(
-                UrlEvolutionChain.indexOf('chain/') + 6
-            )
-            IdEvolutionChain = IdEvolutionChain.substring(0, IdEvolutionChain.length - 1)
+            let EvolutionChainUrl:string = PokemonSpecies.evolution_chain.url
 
-            let PokemonEvolutionChain = await PokeApi.ApiGetEvolutionChain(Number(IdEvolutionChain))
+            let PokemonEvolutionChain = await PokeApi.ApiGetEvolutionChain(EvolutionChainUrl)
 
             ElementDiv.appendChild(await this.CreatePokemonBoxEvolution(PokemonEvolutionChain.chain,PokeApi))
 
@@ -666,8 +662,10 @@ export default class ClassRendererHtml {
                 ElementTypeEvolution = await EvolutionType[Chain.evolution_details[0].trigger.name](Chain.evolution_details[0])
             }
 
-            let ElementPokemonName = await this.CreateElementPokemonName(Chain.species.name,PokeApi)
-            let ElementPokemonImage = await this.CreateElementPokemonImage(Chain.species.name,PokeApi)
+            let ApiGetPokemonUrl = Chain.species.url.replace('pokemon-species','pokemon')
+
+            let ElementPokemonName = await this.CreateElementPokemonName(ApiGetPokemonUrl,PokeApi)
+            let ElementPokemonImage = await this.CreateElementPokemonImage(ApiGetPokemonUrl,PokeApi)
 
             ElementDiv.appendChild(ElementPokemonName)
             ElementDiv.appendChild(ElementTypeEvolution)
