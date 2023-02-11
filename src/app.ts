@@ -158,13 +158,14 @@ class ClassApp {
 
                 ElementView.appendChild(await RendererHtml.CreateElementPokemonView(id,PokeApi,{
                     Next:() => {
-                        if (ViewId >= PokeApi.PokemonLimit) return
-                        ViewId ++
+                        if (ViewId >= PokeApi.PokemonLimit) {ViewId = 1}
+                        else {ViewId ++}
+                        
                         RendererPokemonView(ViewId)
                     },
                     Previous:() => {
-                        if (ViewId == 1) return
-                        ViewId --
+                        if (ViewId == 1) {ViewId = PokeApi.PokemonLimit}
+                        else {ViewId --}
                         RendererPokemonView(ViewId)
                     }
                 }))
