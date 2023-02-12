@@ -151,6 +151,26 @@ body {
     overflow-y: auto;
 }
 
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 210px;
+}
+
+.loading > img {
+    width: 100%;
+}
+
+.loading > p {
+    text-align: center;
+    width: 100%;
+    color: var(--ColorType_electric);
+    font-family: var(--Righteous);
+}
+
 .pokemon_img > button {
     transition: 0.2s;
     background-color: transparent;

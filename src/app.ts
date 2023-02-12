@@ -7,6 +7,9 @@ var Screen = new ClassScreen()
 var RendererHtml = new ClassRendererHtml()
 var ViewId:number = 1
 
+var title:HTMLElement = document.querySelector('title') || document.createElement('title')
+if (document.querySelector('title') == null) document.head.appendChild(title)
+
 type FuncMain = {FuncExit:() => void, FuncOpen:() => void, FuncOpenOne:() => void}
 
 class ClassApp {
@@ -37,11 +40,6 @@ class ClassApp {
         } else {
             Screen.OpenScreen('PokeDex')
         }
-
-        PokeApi.ApiGetPokemon('https://pokeapi.co/api/v2/pokemon/1')
-        .then((Pokemon) => {
-            console.log(Pokemon)
-        })
     }
     
     private AddScreen(): void {
@@ -110,6 +108,7 @@ class ClassApp {
         }
 
         let FuncOpen = async function() {
+            title.innerHTML = 'PokeDex'
             RendererHtml.Main.appendChild(ElementPokeDex)
 
             let ListPokemonCart:number = ElementPokeDex.querySelectorAll('.pokemon_cart').length + 1
@@ -148,6 +147,7 @@ class ClassApp {
                 if (PokemonViewLoading) return
                 if (OldViewId == ViewId) return
 
+                title.innerHTML = `Pokemon ${ViewId}`
                 OldViewId = ViewId
                 PokemonViewLoading = true
 
@@ -181,6 +181,7 @@ class ClassApp {
         }
 
         let FuncOpen = function(): void {
+            title.innerHTML = `Pokemon ${ViewId}`
             RendererHtml.Main.appendChild(ElementView)
 
             RendererPokemonView(ViewId)
