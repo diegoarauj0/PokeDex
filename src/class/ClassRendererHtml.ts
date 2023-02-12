@@ -326,13 +326,15 @@ export default class ClassRendererHtml {
 
         return new Promise(async (resolve) => {
 
+            let ElementDiv = this.CreateElement('div',false)
             let PokemonSpecies = await PokeApi.ApiGetPokemonSpecies(value)
 
             let EvolutionChainUrl:string = PokemonSpecies.evolution_chain.url
 
             let PokemonEvolutionChain = await PokeApi.ApiGetEvolutionChain(EvolutionChainUrl)
 
-            let ElementDiv = await this.CreatePokemonBoxEvolution(PokemonEvolutionChain.chain,PokeApi)
+            ElementDiv.classList.add('evolutions')
+            ElementDiv.appendChild(await this.CreatePokemonBoxEvolution(PokemonEvolutionChain.chain,PokeApi))
 
             resolve(ElementDiv)
         })
@@ -494,8 +496,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML += '<p>Evolução por level, (level up)</p>'
-
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     })
@@ -507,7 +508,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução por item, (use-item)</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     })
@@ -518,7 +519,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução por troca, (trade)</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     })
@@ -529,7 +530,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução cabana, (shed)</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -541,7 +542,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Giro, (spin) <a href="https://bulbapedia.bulbagarden.net/wiki/Sweet" target="_blank">o que e giro?</a></p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -553,7 +554,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Completar um objetivo, Termine a <a href="https://bulbapedia.bulbagarden.net/wiki/Tower_of_Darkness" target="_blank">tower-of-darkness</a> com seu pokemon</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -565,7 +566,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Completar um objetivo, Termine a <a href="https://bulbapedia.bulbagarden.net/wiki/Tower_of_Waters" target="_blank">tower-of-waters</a> com seu pokemon</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -577,7 +578,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Ataque, Acerte tres ataque critico (three-critical-hits)</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -589,7 +590,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Dano, Seu pokemon tem que perde vida (take damage)</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -601,7 +602,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Não Definida, (other) Não tenho Informação de como evoluir esse pokemon ;-; <a href="https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon">bulbagarden</a></p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -613,7 +614,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Ataque, (agile style move) Movimento estilo ágil</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -625,7 +626,7 @@ export default class ClassRendererHtml {
                         let ElementDescription = CreateDescription(Detail)
 
                         ElementEvolutionDetails.innerHTML = `<p>Evolução Por Ataque, (strong style move) movimento de estilo forte</p>`
-                        ElementEvolutionDetails.appendChild(ElementDescription)
+                        ElementEvolutionDetails.innerHTML += ElementDescription.innerHTML
 
                         resolve(ElementEvolutionDetails)
                     
@@ -655,7 +656,7 @@ export default class ClassRendererHtml {
 
             ElementDiv.classList.add('evolution_pokemon')
             NextEvolution.classList.add('evolution_next')
-            ElementTypeEvolution.classList.add('evolution_type')
+            ElementTypeEvolution.classList.add('evolution_description')
 
             if (Chain.evolution_details[0] != undefined && EvolutionType[Chain.evolution_details[0].trigger.name] != undefined) {
                 ElementTypeEvolution = await EvolutionType[Chain.evolution_details[0].trigger.name](Chain.evolution_details[0])
@@ -666,9 +667,12 @@ export default class ClassRendererHtml {
             let ElementPokemonName = await this.CreateElementPokemonName(ApiGetPokemonUrl,PokeApi)
             let ElementPokemonImage = await this.CreateElementPokemonImage(ApiGetPokemonUrl,PokeApi)
 
-            ElementDiv.appendChild(ElementPokemonName)
-            ElementDiv.appendChild(ElementTypeEvolution)
-            ElementDiv.appendChild(ElementPokemonImage)
+            let ElementDivPokemon = this.CreateElement('div',false)
+            ElementDivPokemon.classList.add('evolution_pokemon_information')
+            ElementDivPokemon.appendChild(ElementPokemonName)
+            ElementDivPokemon.appendChild(ElementTypeEvolution)
+            ElementDivPokemon.appendChild(ElementPokemonImage)
+            ElementDiv.appendChild(ElementDivPokemon)
             ElementDiv.appendChild(NextEvolution)
 
             resolve(ElementDiv)
