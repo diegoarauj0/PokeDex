@@ -341,35 +341,6 @@ body {
     font-family: var(--MartianMono);
 }
 
-.view > .pokemon_stats {
-    margin: 10px;
-}
-
-.view > .pokemon_stats > table {
-    border-collapse: collapse;
-    background-color: #ce3f3a;
-}
-
-.view > .pokemon_stats > table > thead > tr > th{
-    border: 2px solid #f1f1f1;
-    color: #f1f1f1;
-    text-align: center;
-    font-family: var(--Righteous);
-    font-size: 1em;
-    font-weight: 100;
-    padding: 5px;
-}
-
-.view > .pokemon_stats > table > tbody > tr > td{
-    border: 2px solid #f1f1f1;
-    color: #f1f1f1;
-    text-align: center;
-    font-family: var(--ChivoMono);
-    font-size: 1em;
-    font-weight: 500;
-    padding: 5px;
-}
-
 .view > .pokemon_button_view {
     width: 100%;
     display: flex;
