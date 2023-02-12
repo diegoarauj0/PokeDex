@@ -102,7 +102,7 @@ export default class ClassRendererHtml {
         ElementDiv.classList.add('loading')
 
         ElementImg.setAttribute('alt', 'Carregando')
-        ElementImg.setAttribute('src', './static/img/loading.gif')
+        ElementImg.setAttribute('src', './web/static/img/loading.gif')
         ElementP.innerHTML = 'Carregando'
 
         ElementDiv.appendChild(ElementImg)
@@ -147,7 +147,7 @@ export default class ClassRendererHtml {
             {
                 let Pokemon = await PokeApi.ApiGetPokemon(value)
 
-                let ElementUrl:string = './static/img/types/'
+                let ElementUrl:string = './web/static/img/types/'
         
                 Pokemon.types.map((Types) => {
                     ElementDiv.innerHTML += 
@@ -638,7 +638,7 @@ export default class ClassRendererHtml {
 
             let ElementDiv = this.CreateElement('div', true)
             let ElementImg = this.CreateElement('img', false)
-            let ElementUrl:string = './static/img/items/'
+            let ElementUrl:string = './web/static/img/items/'
             let name:string
 
             if (typeof(value) == 'number' || !isNaN(Number(value))) {let item = await PokeApi.ApiGetItem(value); name = item.name}
