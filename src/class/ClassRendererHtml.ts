@@ -273,6 +273,7 @@ export default class ClassRendererHtml {
                 ElementTable.appendChild(ElementThead)
                 ElementTable.appendChild(ElementTbody)
         
+                ElementDiv.innerHTML = '<h2>Status</h2>'
                 ElementDiv.appendChild(ElementTable)
         
             }
@@ -334,6 +335,7 @@ export default class ClassRendererHtml {
             let PokemonEvolutionChain = await PokeApi.ApiGetEvolutionChain(EvolutionChainUrl)
 
             ElementDiv.classList.add('evolutions')
+            ElementDiv.innerHTML = '<h2>Evolução</h2>'
             ElementDiv.appendChild(await this.CreatePokemonBoxEvolution(PokemonEvolutionChain.chain,PokeApi))
 
             resolve(ElementDiv)
