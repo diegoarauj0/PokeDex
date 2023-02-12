@@ -656,7 +656,6 @@ export default class ClassRendererHtml {
 
             ElementDiv.classList.add('evolution_pokemon')
             NextEvolution.classList.add('evolution_next')
-            ElementTypeEvolution.classList.add('evolution_description')
 
             if (Chain.evolution_details[0] != undefined && EvolutionType[Chain.evolution_details[0].trigger.name] != undefined) {
                 ElementTypeEvolution = await EvolutionType[Chain.evolution_details[0].trigger.name](Chain.evolution_details[0])
@@ -668,6 +667,7 @@ export default class ClassRendererHtml {
             let ElementPokemonImage = await this.CreateElementPokemonImage(ApiGetPokemonUrl,PokeApi)
 
             let ElementDivPokemon = this.CreateElement('div',false)
+            ElementTypeEvolution.classList.add('evolution_description')
             ElementDivPokemon.classList.add('evolution_pokemon_information')
             ElementDivPokemon.appendChild(ElementPokemonName)
             ElementDivPokemon.appendChild(ElementTypeEvolution)
@@ -698,12 +698,4 @@ export default class ClassRendererHtml {
             resolve(ElementDiv)
         })
     }
-}
-
-function SetTime(time:number): Promise<void>{
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve()
-        },time)
-    })
 }

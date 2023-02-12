@@ -151,6 +151,17 @@ body {
     overflow-y: auto;
 }
 
+.pokemon_img > button {
+    transition: 0.2s;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    font-family: var(--ChivoMono);
+    font-weight: 100;
+    cursor: pointer;
+}
+
 .pokemon_name > p {
     margin-bottom: 0px;
 }
@@ -185,10 +196,34 @@ body {
     align-items: center;
 }
 
+.pokemon_cart > .pokemon_name > button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    font-family: var(--Righteous);
+    font-weight: 100;
+    cursor: pointer;
+    margin: 0px 3px;
+    border-bottom: 1px solid white;
+}
+
 .pokemon_cart > .pokemon_img {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.pokemon_cart > .pokemon_img > button {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    filter: opacity(0%);
+}
+
+.pokemon_cart > .pokemon_img > button:hover {
+    filter: opacity(100%);
 }
 
 .pokemon_cart > .pokemon_img > img {
@@ -230,16 +265,25 @@ body {
     overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
+    justify-content: center;
     height: 100%;
 }
 
 .view > .pokemon_img {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     border-radius: 0px 0px 10% 10%;
+}
+
+.view > .pokemon_img > button {
+    margin: 10px 100%;
+}
+
+.view > .pokemon_img > button:hover {
+    transform: scale(1.1);
 }
 
 .view > .pokemon_img > img {
@@ -277,6 +321,35 @@ body {
     font-family: var(--MartianMono);
 }
 
+.view > .pokemon_stats {
+    margin: 10px;
+}
+
+.view > .pokemon_stats > table {
+    border-collapse: collapse;
+    background-color: #ce3f3a;
+}
+
+.view > .pokemon_stats > table > thead > tr > th{
+    border: 2px solid #f1f1f1;
+    color: #f1f1f1;
+    text-align: center;
+    font-family: var(--Righteous);
+    font-size: 1em;
+    font-weight: 100;
+    padding: 5px;
+}
+
+.view > .pokemon_stats > table > tbody > tr > td{
+    border: 2px solid #f1f1f1;
+    color: #f1f1f1;
+    text-align: center;
+    font-family: var(--ChivoMono);
+    font-size: 1em;
+    font-weight: 500;
+    padding: 5px;
+}
+
 .view > .pokemon_button_view {
     width: 100%;
     display: flex;
@@ -287,6 +360,7 @@ body {
 }
 
 .view > .pokemon_button_view > button {
+    transition: 0.5s;
     margin: 4px;
     padding: 6px;
     border: none;
@@ -294,4 +368,69 @@ body {
     border-radius: 7px;
     cursor: pointer;
     font-family: var(--ChivoMono);
+}
+
+.view > .pokemon_button_view > button:hover {
+    transition: 0.5s;
+    transform: translate(0px,-10px);
+}
+
+.view > .evolutions {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.evolution_pokemon_information {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    padding: 10px;
+    width: 200px;
+    background-color: #ce3f3a;
+    border: 2px solid #f1f1f1;
+}
+
+.evolution_pokemon_information > .pokemon_name {
+    width: 100%;
+    text-align: center;
+    font-family: var(--Righteous);
+    font-size: 1.1em;
+    font-weight: 100;
+    color: #f1f1f1;
+    margin-bottom: 10px;
+}
+
+.evolution_pokemon_information > .evolution_description {
+    width: 100%;
+    text-align: center;
+    font-family: var(--ChivoMono);
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #f1f1f1;
+    margin-bottom: 10px;
+}
+
+.evolution_pokemon_information > .pokemon_img {
+    border-radius: 50%;
+    width: 200px;
+}
+
+.evolution_pokemon_information > .pokemon_img > button {
+    display: none;
+}
+
+.evolution_pokemon_information > .pokemon_img > img {
+    border-radius: 50%;
+    border: 2px solid #f1f1f1;
+    width: 100%;
+}
+
+.evolution_pokemon {
+    display: flex;
+    flex-wrap: wrap;
 }
