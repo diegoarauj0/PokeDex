@@ -239,52 +239,6 @@ export default class ClassRendererHtml {
         })
     }
 
-    public CreateElementPokemonStats(value:string | number,PokeApi:ClassPokeApi): Promise<HTMLElement> {
-        
-        return new Promise(async (resolve,reject) => {
-
-            let ElementDiv = this.CreateElement('div', true)
-            ElementDiv.classList.add('pokemon_stats')
-
-            try
-            {
-                let Pokemon = await PokeApi.ApiGetPokemon(value)
-
-                let ElementTable = this.CreateElement('table',true)
-                let ElementThead = this.CreateElement('thead',false)
-                let ElementTbody = this.CreateElement('tbody', false)
-                let ElementTrName = this.CreateElement('tr', false)
-                let ElementTrStat = this.CreateElement('tr', false)
-        
-                Pokemon.stats.map((Stats) => {
-                    let ElementTh = this.CreateElement('th', false)
-                    let ElementTd = this.CreateElement('td', false)
-        
-                    ElementTh.innerHTML = Stats.stat.name
-                    ElementTd.innerHTML = String(Stats.base_stat)
-        
-                    ElementTrName.appendChild(ElementTh)
-                    ElementTrStat.appendChild(ElementTd)
-                })
-        
-                ElementThead.appendChild(ElementTrName)
-                ElementTbody.appendChild(ElementTrStat)
-        
-                ElementTable.appendChild(ElementThead)
-                ElementTable.appendChild(ElementTbody)
-        
-                ElementDiv.innerHTML = '<h2>Status</h2>'
-                ElementDiv.appendChild(ElementTable)
-        
-            }
-            catch(err) {
-                
-            }
-
-            resolve(ElementDiv)
-        })
-    }
-
     public CreateElementPokemonView(value:string | number,PokeApi:ClassPokeApi,Event:{Next:() => void,Previous:() => void}): Promise<HTMLElement> {
 
         return new Promise(async (resolve,reject) => {
@@ -296,7 +250,6 @@ export default class ClassRendererHtml {
             let ElementPokemonName = await this.CreateElementPokemonName(value,PokeApi)
             let ElementPokemonImage = await this.CreateElementPokemonImage(value,PokeApi)
             let ElementPokemonType = await this.CreateElementPokemonType(value,PokeApi)
-            let ElementPokemonStats = await this.CreateElementPokemonStats(value,PokeApi)
             let ElementEvolutionChain = await this.CreateElementEvolutionChain(value,PokeApi)
             
             
@@ -316,7 +269,6 @@ export default class ClassRendererHtml {
             ElementDiv.appendChild(ElementPokemonName)
             ElementDiv.appendChild(ElementDivControl)
             ElementDiv.appendChild(ElementPokemonType)
-            ElementDiv.appendChild(ElementPokemonStats)
             ElementDiv.appendChild(ElementEvolutionChain)
 
             resolve(ElementDiv)
